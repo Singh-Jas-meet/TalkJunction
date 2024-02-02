@@ -1,0 +1,100 @@
+Below is the expected working of TalkJunction:
+
+Upon opening the app, users encounter a straightforward login page where they can either sign up or log in.
+Once authenticated, they are directed to a screen prompting them to select a topic of interest.
+Upon choosing a topic, users simply press the connect button.
+Behind the scenes, the app's backend algorithm diligently works to find a suitable chat partner, prioritizing availability.
+If multiple users are available, the algorithm quickly matches the user with the first available chat partner.
+The subsequent chat room activity allows users to exchange messages and explore the chosen topic.
+However, this dynamic interaction is intentionally limited to 10 minutes, fostering concise and focused conversations.
+Users also have the autonomy to end the activity prematurely, thanks to a designated button within the chat room interface. 
+
+
+For Talk Junction, a non-relational database, specifically Firebase Real-Time Database, will be employed to ensure real-time data synchronization and seamless communication among users.
+The expected collections within the database include:
+User Collection:
+  Fields: User ID, Username, Interests, Conversation History, etc.
+  To store user-specific information and preferences.
+Chat Rooms Collection:
+  Fields: Topic, Participants, Messages, Timestamp, etc.
+  To manage different conversation rooms based on selected topics.
+Topic Collection:
+  Fields: Topic ID, Name, Description, Users Interested, etc.
+  To maintain a list of available topics and users interested in each.
+Message Collection:
+  Fields: Message ID, Sender ID, Receiver ID, Content, Timestamp, etc.
+  To store messages exchanged within conversation rooms.
+
+
+Below is an example of an anticipated database for two users of the application:
+{
+  "users": [
+    {
+      "userId": "user1",
+      "username": "Alice",
+      "interests": ["Technology", "Movies", "Books"],
+      "conversationHistory": [
+        {
+          "roomId": "room123",
+          "topic": "Technology",
+          "messages": [
+            {
+              "messageId": "msg1",
+              "senderId": "user1",
+              "content": "Hi there! What's your favorite tech gadget?",
+              "timestamp": "2022-02-01T14:30:00"
+            },
+            {
+              "messageId": "msg2",
+              "senderId": "user2",
+              "content": "Hey! I love smartphones. How about you?",
+              "timestamp": "2022-02-01T14:35:00"
+            },
+            {
+              "messageId": "msg3",
+              "senderId": "user1",
+              "content": "I'm a fan of smartwatches. They're so versatile!",
+              "timestamp": "2022-02-01T14:40:00"
+            }
+            // Additional messages can be added here
+          ]
+        }
+        // Additional conversation history entries can be added here
+      ]
+    },
+    {
+      "userId": "user2",
+      "username": "Bob",
+      "interests": ["Sports", "Music", "Technology"],
+      "conversationHistory": [
+        {
+          "roomId": "room123",
+          "topic": "Technology",
+          "messages": [
+            {
+              "messageId": "msg1",
+              "senderId": "user1",
+              "content": "Hi there! What's your favorite tech gadget?",
+              "timestamp": "2022-02-01T14:30:00"
+            },
+            {
+              "messageId": "msg2",
+              "senderId": "user2",
+              "content": "Hey! I love smartphones. How about you?",
+              "timestamp": "2022-02-01T14:35:00"
+            },
+            {
+              "messageId": "msg3",
+              "senderId": "user1",
+              "content": "I'm a fan of smartwatches. They're so versatile!",
+              "timestamp": "2022-02-01T14:40:00"
+            }
+            // Additional messages can be added here
+          ]
+        }
+        // Additional conversation history entries can be added here
+      ]
+    }
+  ]
+}
+
