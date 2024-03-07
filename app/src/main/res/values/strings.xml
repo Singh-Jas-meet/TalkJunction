@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">TalkJunction</string>
+    <string name="image_description">AppLogo</string>
+
+    <string name="email_field">Email</string>
+    <string name="password_input_field">Password</string>
+
+    <string name="log_in_btn">Log In</string>
+    <string name="sign_up_btn">Sign Up</string>
+
+    <string name="facebook_btn">Login with Facebook</string>
+    <string name="google_btn">Sign in with Google</string>
+
+
+    <string name="facebook_app_id">939854277141245</string>
+    <string name="fb_login_protocol_scheme">fb939854277141245</string>
+    <string name="facebook_client_token">8928b724933aa0d87fd7a1bab486f00b</string>
+
+    <string name="server_client_id">208169235625-9haelhllnlqg8dotvrcfsfueis10c09o.apps.googleusercontent.com</string>
+
 </resources>
