@@ -23,11 +23,11 @@ class GoogleAuthentication(
     fun createSignInLauncher(activity: AppCompatActivity): ActivityResultLauncher<Intent> {
         return activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             try {
-                Log.i("Test", "Sign-in result: ${result.resultCode}")
                 if (result.resultCode == Activity.RESULT_OK) {
                     val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
                     try {
                         val account = task.getResult(ApiException::class.java)
+                        Log.d("NAME", "${account.givenName}")
                         firebaseAuthWithGoogle(account.idToken!!, activity)
                     } catch (e: ApiException) {
                         Log.w("Test", "Google sign-in failed", e)
@@ -71,6 +71,10 @@ class GoogleAuthentication(
                             "Firebase/Google Authentication Status:",
                             "signInWithCredential:success"
                         )
+                        Toast.makeText(
+                            activity, "Logged in",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         NavigationUtils.startNewActivity(
                             activity,
                             ChooseDiscussionActivity::class.java
