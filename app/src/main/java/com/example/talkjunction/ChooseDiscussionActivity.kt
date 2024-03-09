@@ -21,7 +21,7 @@ class ChooseDiscussionActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.findChatterBtn.setOnClickListener {
-            firebaseAuth.signOut()
+            NavigationUtils.googleSignInClient?.signOut()
             startActivity(Intent(this, MainActivity::class.java))
             Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show()
         }

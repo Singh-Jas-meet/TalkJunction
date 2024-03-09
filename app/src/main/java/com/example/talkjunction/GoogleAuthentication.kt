@@ -27,8 +27,8 @@ class GoogleAuthentication(
                     val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
                     try {
                         val account = task.getResult(ApiException::class.java)
-                        Log.d("NAME", "${account.givenName}")
                         firebaseAuthWithGoogle(account.idToken!!, activity)
+                        Log.d("NAME", "${account.givenName} ${account.displayName}")
                     } catch (e: ApiException) {
                         Log.w("Test", "Google sign-in failed", e)
                         Toast.makeText(

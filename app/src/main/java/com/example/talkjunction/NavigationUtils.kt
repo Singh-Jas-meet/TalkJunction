@@ -2,9 +2,12 @@ package com.example.talkjunction
 
 import android.app.Activity
 import android.content.Intent
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 
 // This object provides utility functions for navigating between activities.
 object NavigationUtils {
+
+    var googleSignInClient: GoogleSignInClient? = null
 
     // Function to start a new activity.
     // Parameters:

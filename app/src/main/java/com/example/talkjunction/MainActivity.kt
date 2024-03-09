@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+import com.example.talkjunction.NavigationUtils.googleSignInClient
 import com.example.talkjunction.databinding.ActivityMainBinding
 import com.facebook.FacebookSdk
 import com.facebook.login.LoginManager
@@ -19,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var facebookAuthentication: FacebookAuthentication
     private lateinit var emailAuthentication: EmailAuthentication
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var googleAuthentication: GoogleAuthentication
     private lateinit var signInLauncher: ActivityResultLauncher<Intent>
 
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         // Initialize Google authentication handler
-        googleAuthentication = GoogleAuthentication(firebaseAuth, googleSignInClient, this)
+        googleAuthentication = GoogleAuthentication(firebaseAuth, googleSignInClient!!, this)
 
         // Create an ActivityResultLauncher to handle the result of Google sign-in
         signInLauncher = googleAuthentication.createSignInLauncher(this)
