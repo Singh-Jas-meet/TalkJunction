@@ -12,8 +12,8 @@ android {
         applicationId = "com.example.talkjunction"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -24,7 +24,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -66,16 +66,6 @@ dependencies {
 
     // Also add the dependency for the Google Play services library and specify its version
     implementation("com.google.android.gms:play-services-auth:21.0.0")
-
-
-    implementation ("androidx.credentials:credentials:1.1.0")
-    implementation ("androidx.credentials:credentials-play-services-auth:1.1.0")
-    implementation ("com.google.android.libraries.identity.googleid:googleid:1.1.0")
-
-
-    implementation ("com.google.android.gms:play-services-identity:18.0.0")
-
-    implementation("com.github.stevdza-san:OneTapCompose:1.0.12")
 
 
 
