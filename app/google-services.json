@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "208169235625",
-    "project_id": "talkjunction-45e5d",
-    "storage_bucket": "talkjunction-45e5d.appspot.com"
+    "project_number": "270425780801",
+    "project_id": "talkjunction-6846a",
+    "storage_bucket": "talkjunction-6846a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:208169235625:android:8b70f721ffbb33e003e5b8",
+        "mobilesdk_app_id": "1:270425780801:android:4a1e4aeb664ca8b49c4cc0",
         "android_client_info": {
-          "package_name": "com.example.talkjunction"
+          "package_name": "net.app.talkjunction"
         }
       },
       "oauth_client": [
         {
-          "client_id": "208169235625-9haelhllnlqg8dotvrcfsfueis10c09o.apps.googleusercontent.com",
+          "client_id": "270425780801-avgddo2kcgi5e49dfdh52dmecs3lvju9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.talkjunction",
+            "package_name": "net.app.talkjunction",
             "certificate_hash": "8ad271fd52971fbc90a6bcc586090914f78e2979"
           }
         },
         {
-          "client_id": "208169235625-hoqk0khmlld180jc73vb9f9n8509a9mu.apps.googleusercontent.com",
+          "client_id": "270425780801-j9jg17id64vcp6v0cripv13235ftj5eu.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDfhm-bHpvfIG6coSQL-4RinqgR-60hj2g"
+          "current_key": "AIzaSyDxu5h0inlkSN0A1rg7o-y_1vT263ZHulY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "208169235625-hoqk0khmlld180jc73vb9f9n8509a9mu.apps.googleusercontent.com",
+              "client_id": "270425780801-j9jg17id64vcp6v0cripv13235ftj5eu.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

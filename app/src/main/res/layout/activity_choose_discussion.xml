@@ -4,81 +4,169 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChooseDiscussionActivity">
+    android:background="@color/main_theme_color"
+    tools:context="net.app.talkjunction.ChooseDiscussionActivity">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/facebookBlue"
-        android:text="Choose a topic for discussion"
+        android:background="@color/secondary_theme_color"
+        android:padding="10dp"
+        android:text="@string/header_home_page"
         android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_width="370dp"
-        android:layout_height="317dp"
-        android:layout_marginBottom="280dp"
+        android:id="@+id/topicsLinearLayout"
+        android:layout_width="345dp"
+        android:layout_height="458dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="150dp"
         android:orientation="vertical"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <EditText
+                android:id="@+id/addTopicEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="left"
+                android:hint="Type in a topic..."
+                android:inputType="text"
+                android:minHeight="48dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/placeholder_color" />
+
+            <ImageButton
+                android:id="@+id/addTopicImgBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:backgroundTint="@color/main_theme_color"
+                android:contentDescription="Add interest"
+                android:src="@drawable/add_icon" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:visibility="invisible" />
+
+        <CheckBox
+            android:id="@+id/defaultInterestFirst"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/optionFirst"
+            android:checked="true"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dividerInsetEnd="16dp"
+            app:dividerInsetStart="16dp" />
+
+        <CheckBox
+            android:id="@+id/defaultInterestSecond"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/optionTwo"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dividerInsetEnd="16dp"
+            app:dividerInsetStart="16dp" />
+
+        <CheckBox
+            android:id="@+id/defaultInterestThird"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="@string/optionThree"
+            android:textSize="20dp" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dividerInsetEnd="16dp"
+            app:dividerInsetStart="16dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.948">
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip12"
+        <ImageButton
+            android:id="@+id/logoutBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Topic 1"
-            tools:textSize="24sp" />
+            android:backgroundTint="@color/secondary_theme_color"
+            android:contentDescription="Logout"
+            android:src="@drawable/logout_btn_icon" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip10"
+        <View
+            android:layout_width="362dp"
+            android:layout_height="4dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/connectBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Topic 2"
-            android:textSize="24sp" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Topic 3"
-            android:textSize="24sp" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Topic 4"
-            android:textSize="24sp" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Topic 5"
-            android:textSize="24sp" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/chip6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Topic 6"
-            android:textSize="24sp" />
+            android:backgroundTint="@color/secondary_theme_color"
+            android:text="@string/start_connecting_to_another_user"
+            android:textColor="@color/white"
+            android:textSize="24dp" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/findChatterBtn"
+        android:id="@+id/updateFirebaseDatabase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="200dp"
-        android:text="Log out"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:backgroundTint="@color/secondary_theme_color"
+        android:text="@string/updateTopicChoices"
+        android:textColor="@color/white"
+        android:textSize="24dp"
+        app:cornerRadius="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topicsLinearLayout" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

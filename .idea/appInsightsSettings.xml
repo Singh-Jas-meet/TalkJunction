@@ -9,16 +9,11 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.example.talkjunction" />
-                  <option name="mobileSdkAppId" value="1:208169235625:android:8b70f721ffbb33e003e5b8" />
-                  <option name="projectId" value="talkjunction-45e5d" />
-                  <option name="projectNumber" value="208169235625" />
+                  <option name="appId" value="net.app.talkjunction" />
+                  <option name="mobileSdkAppId" value="1:270425780801:android:4a1e4aeb664ca8b49c4cc0" />
+                  <option name="projectId" value="talkjunction-6846a" />
+                  <option name="projectNumber" value="270425780801" />
                 </ConnectionSetting>
-              </option>
-              <option name="failureTypes">
-                <list>
-                  <option value="NON_FATAL" />
-                </list>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
               <option name="timeIntervalDays" value="THIRTY_DAYS" />

@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:backgroundTint="@color/main_theme_color"
-    tools:context=".MainActivity">
+    android:background="@color/main_theme_color"
+    tools:context="net.app.talkjunction.MainActivity">
 
     <EditText
         android:id="@+id/emailTextField"
@@ -14,13 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
-        android:autofillHints=""
         android:ems="10"
         android:hint="@string/email_field"
         android:inputType="text|textEmailAddress"
         android:minHeight="48dp"
-        android:text=""
-        android:textColorHint="#bdbdbd"
+        android:textColor="@color/black"
+        android:textColorHint="@color/placeholder_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -34,13 +32,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="60dp"
-        android:autofillHints=""
         android:ems="10"
         android:hint="@string/password_input_field"
         android:inputType="text|textPassword"
         android:minHeight="48dp"
-        android:text=""
-        android:textColorHint="#bdbdbd"
+        android:textColor="@color/black"
+        android:textColorHint="@color/placeholder_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -84,7 +81,7 @@
             android:paddingRight="12dp"
             android:paddingBottom="10dp"
             android:text="@string/google_btn"
-            android:textColor="#000000"
+            android:textColor="@color/black"
             android:textSize="20sp"
             tools:ignore="RtlHardcoded" />
 
@@ -92,10 +89,10 @@
             android:id="@+id/facebookloginBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/facebookBlue"
             android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/facebookBlue"
             android:text="@string/facebook_btn"
-            android:textColorLink="#ffffff"
+            android:textColor="@color/white"
             android:textSize="18sp"
             app:cornerRadius="0dp"
             tools:ignore="TextContrastCheck,TextSizeCheck" />
@@ -104,10 +101,10 @@
             android:id="@+id/loginBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/secondary_theme_color"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/white"
+            android:backgroundTint="@color/secondary_theme_color"
             android:text="@string/log_in_btn"
+            android:textColor="@color/white"
             android:textSize="18sp"
             app:cornerRadius="0dp" />
 
@@ -115,10 +112,10 @@
             android:id="@+id/signupBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/secondary_theme_color"
-            android:textColor="@color/white"
-            android:text="@string/sign_up_btn"
             android:layout_marginBottom="10dp"
+            android:backgroundTint="@color/secondary_theme_color"
+            android:text="@string/sign_up_btn"
+            android:textColor="@color/white"
             android:textSize="18sp"
             app:cornerRadius="0dp" />
     </LinearLayout>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#ff000000</color>
+    <color name="white">#ffffffff</color>
     <color name="facebookBlue">#1877f2</color>
     <color name="main_theme_color">#ffffed</color>
     <color name="secondary_theme_color">#2d5f4c</color>
     <color name="google_btn_background_color">#f2f2f2</color>
+    <color name="placeholder_color">#93aca1</color>
 </resources>

@@ -7,15 +7,25 @@
 
     <string name="log_in_btn">Log In</string>
     <string name="sign_up_btn">Sign Up</string>
+    <string name="start_connecting_to_another_user">Connect</string>
+
+    <string name="header_home_page">Choose Interest(s)</string>
 
     <string name="facebook_btn">Login with Facebook</string>
     <string name="google_btn">Sign in with Google</string>
+
+    <string name="optionFirst">Artificial Intelligence</string>
+    <string name="optionTwo">Call of Duty</string>
+    <string name="optionThree">NASA</string>
+
+    <string name="updateTopicChoices">Save this choice</string>
 
 
     <string name="facebook_app_id">939854277141245</string>
     <string name="fb_login_protocol_scheme">fb939854277141245</string>
     <string name="facebook_client_token">8928b724933aa0d87fd7a1bab486f00b</string>
 
-    <string name="server_client_id">208169235625-hoqk0khmlld180jc73vb9f9n8509a9mu.apps.googleusercontent.com</string>
+    <string name="server_client_id">270425780801-j9jg17id64vcp6v0cripv13235ftj5eu.apps.googleusercontent.com</string>
+
 
 </resources>
