@@ -42,10 +42,14 @@ class ChooseDiscussionActivity : AppCompatActivity() {
 
         binding.updateFirebaseDatabase.setOnClickListener {
             val topics: String = grabCheckedCheckBoxesText()
-            saveCheckedCheckboxToFirebase(topics, this)
+            if (topics.isNotEmpty()) {
+                saveCheckedCheckboxToFirebase(topics, this)
+            } else {
+                Toast.makeText(this, "Please make a selection", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        binding.connectBtn.setOnClickListener{
+        binding.connectBtn.setOnClickListener {
             NavigationUtils.startNewActivity(this, ChatPageActivity::class.java)
         }
     }
