@@ -4,43 +4,35 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
-
-import net.app.talkjunction.NavigationUtils.googleSignInClient
-import com.facebook.FacebookSdk
-import com.facebook.login.LoginManager
+import androidx.core.content.ContextCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import net.app.talkjunction.databinding.ActivityMainBinding
 
+/**
+ * This activity represents the main screen of the application.
+ */
 class MainActivity : AppCompatActivity() {
 
     // Declare variables
     private lateinit var binding: ActivityMainBinding
-    private lateinit var facebookAuthentication: FacebookAuthentication
     private lateinit var emailAuthentication: EmailAuthentication
-    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var googleAuthentication: GoogleAuthentication
+    private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var signInLauncher: ActivityResultLauncher<Intent>
+    private lateinit var googleSignInClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.secondary_theme_color)
 
-        // Set up Facebook SDK
-        FacebookSdk.setAutoInitEnabled(true)
 
         // Inflate layout and set content view
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Set up Facebook login button click listener
-        binding.facebookloginBtn.setOnClickListener {
-            LoginManager.getInstance()
-                .logInWithReadPermissions(this, listOf("email", "public_profile"))
-        }
-
-        // Initialize Facebook authentication handler
-        facebookAuthentication = FacebookAuthentication(this)
 
         // Initialize email/password authentication handler
         emailAuthentication = EmailAuthentication(this)
@@ -65,14 +57,16 @@ class MainActivity : AppCompatActivity() {
             .requestEmail()
             .build()
 
-        // Initialize Firebase authentication
-        firebaseAuth = FirebaseAuth.getInstance()
 
         // Initialize Google sign-in client
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
+        firebaseAuth = FirebaseAuth.getInstance()
+
+
         // Initialize Google authentication handler
-        googleAuthentication = GoogleAuthentication(firebaseAuth, googleSignInClient!!, this)
+        googleAuthentication =
+            GoogleAuthentication(firebaseAuth, googleSignInClient, this)
 
         // Create an ActivityResultLauncher to handle the result of Google sign-in
         signInLauncher = googleAuthentication.createSignInLauncher(this)

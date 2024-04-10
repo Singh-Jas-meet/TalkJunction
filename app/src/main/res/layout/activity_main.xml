@@ -7,49 +7,11 @@
     android:background="@color/main_theme_color"
     tools:context="net.app.talkjunction.MainActivity">
 
-    <EditText
-        android:id="@+id/emailTextField"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
-        android:ems="10"
-        android:hint="@string/email_field"
-        android:inputType="text|textEmailAddress"
-        android:minHeight="48dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/placeholder_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.386" />
-
-    <EditText
-        android:id="@+id/passwordTextField"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
-        android:ems="10"
-        android:hint="@string/password_input_field"
-        android:inputType="text|textPassword"
-        android:minHeight="48dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/placeholder_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/emailTextField"
-        app:layout_constraintVertical_bias="0.183" />
-
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="220dp"
         android:layout_height="208dp"
+        android:layout_marginTop="30dp"
         android:contentDescription="@string/image_description"
         app:layout_constraintBottom_toTopOf="@+id/emailTextField"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,15 +21,54 @@
         app:layout_constraintVertical_bias="0.642"
         app:srcCompat="@drawable/app_logo" />
 
+    <EditText
+        android:id="@+id/emailTextField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="40dp"
+        android:ems="10"
+        android:hint="@string/email_field"
+        android:inputType="text|textEmailAddress"
+        android:minHeight="48dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/secondary_theme_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/passwordTextField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="40dp"
+        android:ems="10"
+        android:hint="@string/password_input_field"
+        android:inputType="text|textPassword"
+        android:minHeight="48dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/secondary_theme_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailTextField" />
+
     <LinearLayout
-        android:layout_width="258dp"
-        android:layout_height="262dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.927">
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextField"
+        app:layout_constraintVertical_bias="0.798">
 
         <Button
             android:id="@+id/googleLoginBtn"
@@ -84,18 +85,6 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             tools:ignore="RtlHardcoded" />
-
-        <Button
-            android:id="@+id/facebookloginBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="@color/facebookBlue"
-            android:text="@string/facebook_btn"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:cornerRadius="0dp"
-            tools:ignore="TextContrastCheck,TextSizeCheck" />
 
         <Button
             android:id="@+id/loginBtn"
@@ -118,7 +107,8 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             app:cornerRadius="0dp" />
-    </LinearLayout>
 
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

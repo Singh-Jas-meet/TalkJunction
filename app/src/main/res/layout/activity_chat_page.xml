@@ -8,37 +8,39 @@
     android:background="@color/main_theme_color"
     tools:context=".ChatPageActivity">
 
-    <ScrollView
-        android:id="@+id/chatAreaLinearLayout"
-        android:layout_width="416dp"
-        android:layout_height="562dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.27">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/secondary_theme_color"
         android:padding="10dp"
-        android:text="@string/app_name"
+        android:text="@string/chatPage"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="35dp"
+        android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- ScrollView with LinearLayout for messages -->
+    <ScrollView
+        android:id="@+id/messageScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView2">
+
+        <LinearLayout
+            android:id="@+id/messageContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical" />
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -46,31 +48,37 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/endChat"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chatAreaLinearLayout">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:id="@+id/messageEditText"
+        <ScrollView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="Type your message..."
-            android:inputType="textMultiLine"
-            android:minHeight="48dp"
-            android:maxLines="3"
-            android:textSize="20sp" />
+            android:fillViewport="true"> <!-- This ensures that the ScrollView fills its parent -->
+
+            <EditText
+                android:id="@+id/messageEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/interest_text_placeholder"
+                android:textColorHint="@color/black"
+                android:inputType="textMultiLine"
+                android:maxLines="3"
+                android:minHeight="48dp"
+                android:textSize="20sp" />
+        </ScrollView>
 
         <Button
             android:id="@+id/sendBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/secondary_theme_color"
+            android:text="@string/send_txt_btn"
             android:textColor="@color/white"
-            android:text="Send"
             android:textSize="20sp" />
-
     </LinearLayout>
 
 
@@ -78,14 +86,14 @@
         android:id="@+id/endChat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:backgroundTint="@color/secondary_theme_color"
-        android:textColor="@color/white"
-        android:text="End Chat"
         android:padding="10dp"
-        android:textSize="24dp"
-        android:layout_marginBottom="5dp"
+        android:text="@string/end_chat_btn"
+        android:textColor="@color/white"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

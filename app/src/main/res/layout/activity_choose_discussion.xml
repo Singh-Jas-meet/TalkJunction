@@ -48,12 +48,13 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:gravity="left"
-                android:hint="Type in a topic..."
+                android:gravity="start"
+                android:hint="@string/addInterestEditTextPlaceholder"
                 android:inputType="text"
                 android:minHeight="48dp"
                 android:textColor="@color/black"
-                android:textColorHint="@color/placeholder_color" />
+                android:textColorHint="@color/secondary_theme_color"
+                android:autofillHints="" />
 
             <ImageButton
                 android:id="@+id/addTopicImgBtn"
@@ -72,48 +73,62 @@
             android:background="?android:attr/listDivider"
             android:visibility="invisible" />
 
-        <CheckBox
-            android:id="@+id/defaultInterestFirst"
+        <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/optionFirst"
-            android:checked="true"
-            android:textColor="@color/black"
-            android:textSize="20dp" />
+            android:layout_height="wrap_content">
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:dividerInsetEnd="16dp"
-            app:dividerInsetStart="16dp" />
+            <RadioButton
+                android:id="@+id/defaultInterestFirst"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/optionFirst"
+                android:textColor="@color/black"
+                app:buttonTint="@color/secondary_theme_color"
+                android:textSize="20sp"
+                tools:ignore="VisualLintButtonSize" />
 
-        <CheckBox
-            android:id="@+id/defaultInterestSecond"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/optionTwo"
-            android:textColor="@color/black"
-            android:textSize="20dp" />
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerInsetEnd="6dp"
+                app:dividerInsetStart="6dp" />
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:dividerInsetEnd="16dp"
-            app:dividerInsetStart="16dp" />
+            <RadioButton
+                android:id="@+id/defaultInterestSecond"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/optionTwo"
+                android:textColor="@color/black"
+                app:buttonTint="@color/secondary_theme_color"
+                android:textSize="20sp"
+                tools:ignore="VisualLintButtonSize" />
 
-        <CheckBox
-            android:id="@+id/defaultInterestThird"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="@string/optionThree"
-            android:textSize="20dp" />
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerInsetEnd="6dp"
+                app:dividerInsetStart="6dp" />
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:dividerInsetEnd="16dp"
-            app:dividerInsetStart="16dp" />
+            <RadioButton
+                android:id="@+id/defaultInterestThird"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/optionThree"
+                android:textColor="@color/black"
+                app:buttonTint="@color/secondary_theme_color"
+                android:textSize="20sp"
+                tools:ignore="VisualLintButtonSize" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerInsetEnd="6dp"
+                app:dividerInsetStart="6dp" />
+
+        </RadioGroup>
+
 
     </LinearLayout>
 
@@ -140,7 +155,7 @@
             android:src="@drawable/logout_btn_icon" />
 
         <View
-            android:layout_width="362dp"
+            android:layout_width="0dp"
             android:layout_height="4dp"
             android:layout_weight="1" />
 
@@ -151,22 +166,8 @@
             android:backgroundTint="@color/secondary_theme_color"
             android:text="@string/start_connecting_to_another_user"
             android:textColor="@color/white"
-            android:textSize="24dp" />
+            android:textSize="24sp" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/updateFirebaseDatabase"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/secondary_theme_color"
-        android:text="@string/updateTopicChoices"
-        android:textColor="@color/white"
-        android:textSize="24dp"
-        app:cornerRadius="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topicsLinearLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
