@@ -20,9 +20,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import net.app.talkjunction.databinding.ActivityChooseDiscussionBinding
 import kotlin.math.abs
-import kotlinx.coroutines.*
 
 
 class ChooseDiscussionActivity : AppCompatActivity() {
@@ -48,20 +51,19 @@ class ChooseDiscussionActivity : AppCompatActivity() {
         // Initializing FirebaseAuth instance
         firebaseAuth = FirebaseAuth.getInstance()
 
-
-        // Set click listeners for buttons
+//         Set click listeners for buttons
 //        image button to add new radio button
         binding.addTopicImgBtn.setOnClickListener {
             addRadioButtonAndDivider()
         }
 
-//               connect btn to handle finding a pair user and starting the chat activity
+//      connect btn to handle finding a pair user and starting the chat activity
         binding.connectBtn.setOnClickListener {
             handleConnectButtonClick()
         }
 
 
-// logout btn removes user from AppUsers node
+//      logout btn removes user from AppUsers node
         binding.logoutBtn.setOnClickListener {
             val database = FirebaseDatabase.getInstance()
             val appUsersRef = database.getReference("AppUsers")
@@ -111,7 +113,7 @@ class ChooseDiscussionActivity : AppCompatActivity() {
         if (text.isEmpty()) {
             Toast.makeText(this, "Please enter a topic", Toast.LENGTH_SHORT).show()
         } else {
-// extract text from editText
+//          extract text from editText
             val capitalizedText = text.substring(0, 1).uppercase() + text.substring(1)
             val hasSelectedRadioButton = binding.radioGroup.checkedRadioButtonId != -1
 

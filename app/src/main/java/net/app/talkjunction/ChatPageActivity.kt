@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
@@ -28,34 +29,51 @@ import net.app.talkjunction.databinding.ActivityChatPageBinding
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+/**
+ * Activity responsible for managing the chat interface.
+ */
 class ChatPageActivity : AppCompatActivity() {
 
+    // Binding for the activity layout.
     private lateinit var binding: ActivityChatPageBinding
+
+    // Coroutine scope for managing coroutines in this activity.
     private var coroutineScope = CoroutineScope(Dispatchers.Main)
 
-
+    /**
+     * Lifecycle method called when the activity is created.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Inflate the layout using view binding.
         binding = ActivityChatPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Set the status bar color.
         window.statusBarColor = ContextCompat.getColor(this, R.color.secondary_theme_color)
 
+        // Initialize UI components.
         val messageBox = binding.messageEditText
         val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
 
+        // Set up coroutine scope.
         coroutineScope = CoroutineScope(Dispatchers.Main)
 
-        // Start checking for pair ID existence
+        // Start checking for pair ID existence periodically.
         checkPairIdPeriodically()
 
+        // Listener for ending the chat session.
         binding.endChat.setOnClickListener {
             if (currentUserUid != null) {
-                // Retrieve the pair ID for the current user
+                // Retrieve the pair ID for the current user.
                 getPairID(currentUserUid) { pairId ->
                     if (pairId.isNotEmpty()) {
-                        // Update pairID and isChatting fields for both users in the pair
+                        // Update pairID and isChatting fields for both users in the pair.
                         updatePairFields(pairId) { result ->
                             if (result) {
+                                Toast.makeText(this, "Chat ended", Toast.LENGTH_SHORT).show()
+                                // Start ChooseDiscussionActivity if update is successful.
                                 NavigationUtils.startNewActivity(
                                     this,
                                     ChooseDiscussionActivity::class.java
@@ -63,7 +81,7 @@ class ChatPageActivity : AppCompatActivity() {
                             }
                         }
                     } else {
-                        // Handle the case where pairID is not found
+                        // Handle the case where pairID is not found.
                         Toast.makeText(this, "No active chat session to end", Toast.LENGTH_SHORT)
                             .show()
                     }
@@ -71,43 +89,50 @@ class ChatPageActivity : AppCompatActivity() {
             }
         }
 
-
-
+        // Listener for sending a message.
         binding.sendBtn.setOnClickListener {
             val message = messageBox.text.toString().trim()
             if (currentUserUid != null)
                 getPairID(currentUserUid) { pairId ->
                     if (pairId.isNotEmpty()) {
-                        // If pairID is available, send the message to the pair
+                        // If pairID is available, send the message to the pair.
                         sendMessageToPair(pairId, message)
                         messageBox.text.clear()
                     } else {
-                        // If pairID is not available, handle the case accordingly
+                        // If pairID is not available, handle the case accordingly.
                         Log.e(TAG, "Pair ID not found for the current user")
                     }
                 }
         }
 
+        // Start listening for incoming messages.
         if (currentUserUid != null) {
             getPairID(currentUserUid) { pairId ->
                 if (pairId.isNotEmpty()) {
-                    // If pairID is available, start listening for messages
+                    // If pairID is available, start listening for messages.
                     listenForMessages(pairId)
                 } else {
-                    // If pairID is not available, handle the case accordingly
+                    // If pairID is not available, handle the case accordingly.
                     Log.e(TAG, "Pair ID not found for the current user")
                 }
             }
         }
     }
 
-
+    /**
+     * Lifecycle method called when the activity is destroyed.
+     */
     override fun onDestroy() {
         super.onDestroy()
+        // Start ChooseDiscussionActivity when the activity is destroyed.
         NavigationUtils.startNewActivity(this, ChooseDiscussionActivity::class.java)
     }
 
-
+    /**
+     * Function to send a message to the pair identified by pairId.
+     * @param pairId The ID of the pair to send the message to.
+     * @param message The message to send.
+     */
     private fun sendMessageToPair(pairId: String, message: String) {
         val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
         val pairRef = FirebaseDatabase.getInstance().getReference("Pairs/$pairId")
@@ -119,59 +144,67 @@ class ChatPageActivity : AppCompatActivity() {
 
                 val toUser = if (currentUserUid == user1) user2 else user1
 
-                // Create the message object
+                // Create the message object.
                 val messageData = mapOf(
                     "from" to currentUserUid,
                     "to" to toUser,
                     "message" to message
                 )
 
-                // Save the message to the Messages node under the pair
+                // Save the message to the Messages node under the pair.
                 val messagesRef = pairRef.child("Messages").push()
                 messagesRef.setValue(messageData)
                     .addOnSuccessListener {
-                        // Message sent successfully
+                        // Message sent successfully.
                         Log.d(TAG, "Message sent successfully")
                     }
                     .addOnFailureListener { e ->
-                        // Handle the error
+                        // Handle the error.
                         Log.e(TAG, "Error sending message: ${e.message}")
                     }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                // Handle database error
+                // Handle database error.
                 Log.e(TAG, "Database error: ${databaseError.message}")
             }
         })
     }
 
+    /**
+     * Function to retrieve the pair ID associated with the given user.
+     * @param currentUser The ID of the current user.
+     * @param onComplete Callback function to be called with the retrieved pair ID.
+     */
     private fun getPairID(currentUser: String, onComplete: (String) -> Unit) {
         val database = FirebaseDatabase.getInstance()
         val userRef = database.getReference("AppUsers").child(currentUser)
 
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get the pairID from the user's data
+                // Get the pairID from the user's data.
                 val pairID = dataSnapshot.child("pairID").getValue(String::class.java)
 
-                // Call onComplete callback with the pairID
+                // Call onComplete callback with the pairID.
                 onComplete(pairID ?: "No pairID")
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                // Handle database error
+                // Handle database error.
                 Log.e(TAG, "Database error: ${databaseError.message}")
-                // Call onComplete callback with an empty string in case of error
+                // Call onComplete callback with an empty string in case of error.
                 onComplete("")
             }
         })
     }
 
+    /**
+     * Function to listen for incoming messages for the specified pair.
+     * @param pairId The ID of the pair for which to listen for messages.
+     */
     private fun listenForMessages(pairId: String) {
         val pairRef = FirebaseDatabase.getInstance().getReference("Pairs/$pairId/Messages")
 
-        // Listen for new messages
         pairRef.addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val message = snapshot.getValue(Message::class.java)
@@ -181,21 +214,15 @@ class ChatPageActivity : AppCompatActivity() {
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                // This method is called when a child node in the database is updated.
-                // In a chat application where users can't edit their messages, and messages are displayed as they are received,
-                // there is currently no need to handle child node updates.
+                // No action needed for child changes in this context.
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
-                // This method is called when a child node is removed from the database.
-                // In this chat application, users don't have the ability to delete their messages,
-                // so there's no need to handle child node removals.
+                // No action needed for child removals in this context.
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                // This method is called when a child node is moved to a different location within the database.
-                // Since messages are displayed in the order they were sent and there's no need to rearrange them,
-                // handling child node movements is not necessary in this context.
+                // No action needed for child movements in this context.
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -204,49 +231,63 @@ class ChatPageActivity : AppCompatActivity() {
         })
     }
 
+    /**
+     * Function to display a message in the chat interface.
+     * @param message The message object to display.
+     */
     private fun displayMessage(message: Message) {
-        // Determine if the message is sent by the current user or the other user
         val isCurrentUser = message.from == FirebaseAuth.getInstance().currentUser?.uid
 
-        // Determine the appropriate gravity for the message based on the sender
-        val gravity = if (isCurrentUser) Gravity.END else Gravity.START
-
-        // Create a new TextView to display the message
         val messageTextView = TextView(this).apply {
             text = message.message
             layoutParams = ViewGroup.MarginLayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             ).apply {
-                setGravity(gravity)
-                bottomMargin = 10.dpToPx() // Convert dp to pixels
+                bottomMargin = 10.dpToPx()
             }
-            textSize = 20f // Set the text size to 20sp
-            setTextColor(Color.WHITE)
-            setBackgroundResource(R.drawable.rounded_corner_bg)
-            setPadding(22, 11, 22, 11) // Add padding for better readability
+            textSize = 20f
+
+            // Set background and text color based on the sender
+            if (isCurrentUser) {
+                setBackgroundResource(R.drawable.round_corner_message_bg_green)
+                setTextColor(Color.parseColor("#FFFFED"))
+                this.gravity = Gravity.END
+            } else {
+                setBackgroundResource(R.drawable.round_corner_message_bg_white)
+                setTextColor(Color.parseColor("#2D5F4C"))
+                this.gravity = Gravity.START
+            }
+
+            setPadding(22, 11, 22, 11)
         }
 
-        // Add the TextView to the appropriate side of the layout
         binding.messageContainer.addView(messageTextView)
 
-        // Optionally, scroll the message container to the bottom to show the latest message
         binding.messageContainer.post {
             binding.messageScrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }
 
-    // Extension function to convert dp to pixels
+
+    /**
+     * Extension function to convert dp to pixels.
+     * @return The pixel value equivalent to the given dp value.
+     */
     private fun Int.dpToPx(): Int {
         val density = resources.displayMetrics.density
         return (this * density).toInt()
     }
 
+    /**
+     * Function to update pair fields after ending the chat session.
+     * @param pairId The ID of the pair to update.
+     * @param onComplete Callback function to be called after the update operation.
+     */
     private fun updatePairFields(pairId: String, onComplete: (Boolean) -> Unit) {
         val database = FirebaseDatabase.getInstance()
         val pairsRef = database.getReference("Pairs").child(pairId)
 
-        // Get the pair data
         pairsRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val user1 = dataSnapshot.child("user1").value.toString()
@@ -255,48 +296,54 @@ class ChatPageActivity : AppCompatActivity() {
                 val user1Ref = database.getReference("AppUsers/$user1")
                 val user2Ref = database.getReference("AppUsers/$user2")
 
-
-                // Update pairID and isChatting fields to null and false, respectively for user 1
                 user1Ref.removeValue()
-                .addOnSuccessListener {
-                    Log.d(TAG,  "$user1 removed from database")
-                    // Success for user 1, proceed with updating user 2
-                    user2Ref.removeValue(
-                    ).addOnSuccessListener {
-                        Log.d(TAG, "$user2 removed from database")
-                        // Success for both users, delete the pair node
-                        pairsRef.removeValue()
-                            .addOnSuccessListener {
-                                Log.d(TAG, "Pair deleted successfully")
-                                onComplete(true) // Indicate success
-                            }.addOnFailureListener { e ->
-                                Log.e(TAG, "Error deleting pair: ${e.message}")
-                                onComplete(false) // Indicate failure
-                            }
+                    .addOnSuccessListener {
+                        Log.d(TAG, "$user1 removed from database")
+                        user2Ref.removeValue(
+                        ).addOnSuccessListener {
+                            Log.d(TAG, "$user2 removed from database")
+                            pairsRef.removeValue()
+                                .addOnSuccessListener {
+                                    Log.d(TAG, "Pair deleted successfully")
+                                    onComplete(true)
+                                }.addOnFailureListener { e ->
+                                    Log.e(TAG, "Error deleting pair: ${e.message}")
+                                    onComplete(false)
+                                }
+                        }.addOnFailureListener { e ->
+                            Log.e(TAG, "Error deleting $user2: ${e.message}")
+                            onComplete(false)
+                        }
                     }.addOnFailureListener { e ->
-                        Log.e(TAG, "Error deleting $user2: ${e.message}")
-                        onComplete(false) // Indicate failure
+                        Log.e(TAG, "Error deleting $user1: ${e.message}")
+                        onComplete(false)
                     }
-                }.addOnFailureListener { e ->
-                    Log.e(TAG, "Error deleting $user1: ${e.message}")
-                    onComplete(false) // Indicate failure
-                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.e(TAG, "Failed to read value.", databaseError.toException())
-                onComplete(false) // Indicate failure
+                onComplete(false)
             }
         })
     }
 
-    // Define the Message data class representing a single message
+    /**
+     * Data class representing a message.
+     * @param from The ID of the sender.
+     * @param to The ID of the recipient.
+     * @param message The content of the message.
+     */
     data class Message(
         val from: String? = null,
         val to: String? = null,
         val message: String? = null
     )
 
+    /**
+     * Function to check if a pair ID exists.
+     * @param pairId The ID of the pair to check.
+     * @return True if the pair ID exists, false otherwise.
+     */
     private suspend fun checkPairIdExists(pairId: String): Boolean = withContext(Dispatchers.IO) {
         val database = FirebaseDatabase.getInstance()
         val pairRef = database.getReference("Pairs/$pairId")
@@ -309,28 +356,26 @@ class ChatPageActivity : AppCompatActivity() {
 
                 override fun onCancelled(databaseError: DatabaseError) {
                     Log.e(TAG, "Error checking pair ID existence: ${databaseError.message}")
-                    continuation.resume(false) // Resume with false when cancelled
+                    continuation.resume(false)
                 }
             })
         }
     }
 
-    // Function to periodically check for pair ID existence
+    /**
+     * Function to periodically check for pair ID existence.
+     */
     private fun checkPairIdPeriodically() {
         coroutineScope.launch {
             while (isActive) {
-                delay(5000) // Check every 5 seconds
-
+                delay(5000)
                 val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
                 if (currentUserUid != null) {
-                    // Retrieve the pair ID for the current user
                     getPairID(currentUserUid) { pairId ->
                         if (pairId.isNotEmpty()) {
-                            // Check if the pair ID exists
                             coroutineScope.launch {
                                 val exists = checkPairIdExists(pairId)
                                 if (!exists) {
-                                    // Start login activity if pair ID doesn't exist
                                     NavigationUtils.startNewActivity(
                                         this@ChatPageActivity,
                                         ChooseDiscussionActivity::class.java
@@ -344,12 +389,32 @@ class ChatPageActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Lifecycle method called when the activity is paused.
+     */
     override fun onPause() {
         super.onPause()
-        // Cancel the coroutine when the activity is not visible
         coroutineScope.coroutineContext.cancel()
     }
 
+    @Suppress("DEPRECATION")
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        AlertDialog.Builder(this)
+            .setTitle("Exit Chat")
+            .setMessage("Are you sure you want to leave the chat?")
+            .setPositiveButton("Yes") { _, _ ->
+                // Call super method to allow the activity to be finished
+                FirebaseDatabase.getInstance().reference.removeValue()
+                super.onBackPressed()
+            }
+            .setNegativeButton("No", null) // Dismiss dialog if "No" is clicked
+            .show()
+    }
+
+
 }
+
+
 
 

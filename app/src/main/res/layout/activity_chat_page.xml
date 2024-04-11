@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_theme_color"
+    android:background="@color/white"
     tools:context=".ChatPageActivity">
 
     <TextView
@@ -38,8 +38,8 @@
             android:id="@+id/messageContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:padding="10dp" />
     </ScrollView>
 
     <LinearLayout
@@ -55,19 +55,18 @@
 
         <ScrollView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fillViewport="true"> <!-- This ensures that the ScrollView fills its parent -->
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <EditText
                 android:id="@+id/messageEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/interest_text_placeholder"
-                android:textColorHint="@color/black"
                 android:inputType="textMultiLine"
                 android:maxLines="3"
                 android:minHeight="48dp"
+                android:textColorHint="@color/black"
                 android:textSize="20sp" />
         </ScrollView>
 
@@ -75,6 +74,7 @@
             android:id="@+id/sendBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:backgroundTint="@color/secondary_theme_color"
             android:text="@string/send_txt_btn"
             android:textColor="@color/white"
