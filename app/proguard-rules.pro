@@ -103,3 +103,5 @@
 -dontwarn org.zeroturnaround.javarebel.ClassEventListener
 -dontwarn org.zeroturnaround.javarebel.Reloader
 -dontwarn org.zeroturnaround.javarebel.ReloaderFactory
+-keepattributes LineNumberTable,SourceFile
+-renamesourcefileattribute SourceFile

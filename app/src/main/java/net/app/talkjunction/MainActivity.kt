@@ -11,9 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import net.app.talkjunction.databinding.ActivityMainBinding
 
-/**
- * This activity represents the main screen of the application.
- */
+/** This activity represents the main screen of the application. */
 class MainActivity : AppCompatActivity() {
 
     // Declare variables
@@ -28,11 +26,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         window.statusBarColor = ContextCompat.getColor(this, R.color.secondary_theme_color)
 
-
         // Inflate layout and set content view
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         // Initialize email/password authentication handler
         emailAuthentication = EmailAuthentication(this)
@@ -52,21 +48,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Set up Google sign-in options
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.server_client_id))
-            .requestEmail()
-            .build()
-
+        val gso =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.server_client_id))
+                .requestEmail()
+                .build()
 
         // Initialize Google sign-in client
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         firebaseAuth = FirebaseAuth.getInstance()
 
-
         // Initialize Google authentication handler
-        googleAuthentication =
-            GoogleAuthentication(firebaseAuth, googleSignInClient, this)
+        googleAuthentication = GoogleAuthentication(firebaseAuth, googleSignInClient, this)
 
         // Create an ActivityResultLauncher to handle the result of Google sign-in
         signInLauncher = googleAuthentication.createSignInLauncher(this)

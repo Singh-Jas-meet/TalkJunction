@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.example.talkjunction",
+  "applicationId": "net.app.talkjunction",
   "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 2,
-      "versionName": "1.1",
+      "versionCode": 6,
+      "versionName": "1.2",
       "outputFile": "app-release.apk"
     }
   ],
