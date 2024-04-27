@@ -1,10 +1,14 @@
 package net.app.talkjunction
 
+import android.app.ProgressDialog
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
@@ -33,6 +37,7 @@ class ChatPageActivity : AppCompatActivity() {
 
     // Binding for the activity layout.
     private lateinit var binding: ActivityChatPageBinding
+    private lateinit var progressDialog: ProgressDialog
 
     // Coroutine scope for managing coroutines in this activity.
     private var coroutineScope = CoroutineScope(Dispatchers.Main)
@@ -47,6 +52,7 @@ class ChatPageActivity : AppCompatActivity() {
 
         // Set the status bar color.
         window.statusBarColor = ContextCompat.getColor(this, R.color.secondary_theme_color)
+        progressDialog = ProgressDialog(this)
 
         // Initialize UI components.
         val messageBox = binding.messageEditText
@@ -60,6 +66,8 @@ class ChatPageActivity : AppCompatActivity() {
 
         // Listener for ending the chat session.
         binding.endChat.setOnClickListener {
+            progressDialog.setMessage("Ending chat")
+            progressDialog.show()
             if (currentUserUid != null) {
                 // Retrieve the pair ID for the current user.
                 getPairID(currentUserUid) { pairId ->
@@ -67,7 +75,7 @@ class ChatPageActivity : AppCompatActivity() {
                         // Update pairID and isChatting fields for both users in the pair.
                         deletePairAndUsers(pairId) { result ->
                             if (result) {
-                                Toast.makeText(this, "Chat ended", Toast.LENGTH_SHORT).show()
+                                progressDialog.dismiss()
                                 // Start ChooseDiscussionActivity if update is successful.
                                 NavigationUtils.startNewActivity(
                                     this,
@@ -100,6 +108,42 @@ class ChatPageActivity : AppCompatActivity() {
                 }
         }
 
+        // Define a function to handle sending the message
+        fun sendMessage() {
+            val message = messageBox.text.toString().trim()
+            if (currentUserUid != null)
+                getPairID(currentUserUid) { pairId ->
+                    if (pairId.isNotEmpty()) {
+                        // If pairID is available, send the message to the pair.
+                        sendMessageToPair(pairId, message)
+                        messageBox.text.clear()
+
+                        // Hide the keyboard after sending the message
+                        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm.hideSoftInputFromWindow(messageBox.windowToken, 0)
+                    } else {
+                        // If pairID is not available, handle the case accordingly.
+                        Log.e(TAG, "Pair ID not found for the current user")
+                    }
+                }
+        }
+
+        // Set click listener for sendBtn
+        binding.sendBtn.setOnClickListener {
+            // Call the sendMessage function when sendBtn is clicked
+            sendMessage()
+        }
+
+        // Set onKeyListener for messageBox
+        messageBox.setOnKeyListener { _, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
+                // Call the sendMessage function when Enter key is pressed
+                sendMessage()
+                return@setOnKeyListener true
+            }
+            return@setOnKeyListener false
+        }
+
         // Start listening for incoming messages.
         if (currentUserUid != null) {
             getPairID(currentUserUid) { pairId ->
@@ -117,6 +161,8 @@ class ChatPageActivity : AppCompatActivity() {
     /** Lifecycle method called when the activity is destroyed. */
     override fun onDestroy() {
         super.onDestroy()
+        // Show a toast message indicating that the user ended the chat
+        Toast.makeText(this, "chat ended", Toast.LENGTH_SHORT).show()
         // Start ChooseDiscussionActivity when the activity is destroyed.
         NavigationUtils.startNewActivity(this, ChooseDiscussionActivity::class.java)
     }

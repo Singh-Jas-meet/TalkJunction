@@ -1,5 +1,6 @@
 package net.app.talkjunction
 
+import android.app.ProgressDialog
 import android.content.ContentValues.TAG
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -31,6 +32,7 @@ class ChooseDiscussionActivity : AppCompatActivity() {
     // Binding instance to access views in the layout
     private lateinit var binding: ActivityChooseDiscussionBinding
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +43,9 @@ class ChooseDiscussionActivity : AppCompatActivity() {
         // Inflating the layout using ViewBinding
         binding = ActivityChooseDiscussionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Finding a pair")
 
         // Set up RadioGroup listener
         setupRadioGroupListener()
@@ -344,6 +349,7 @@ class ChooseDiscussionActivity : AppCompatActivity() {
         val interest = grabCheckedRadioButtonText().trim()
         if (interest.isNotEmpty()) {
             //            start finding the pairing user
+            progressDialog.show()
             getUserWithInterest(
                 interest = interest,
                 onSuccess = { matchedUserId ->
@@ -371,6 +377,7 @@ class ChooseDiscussionActivity : AppCompatActivity() {
                                             //                                        if user in a
                                             // pair, start the chat activity
                                             if (userInPair) {
+                                                progressDialog.dismiss()
                                                 NavigationUtils.startNewActivity(
                                                     this@ChooseDiscussionActivity,
                                                     ChatPageActivity::class.java
