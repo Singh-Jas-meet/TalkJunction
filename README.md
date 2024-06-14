@@ -58,7 +58,7 @@ In the chat interface:
 ## Installation
 
 1. Clone the TalkJunction repository from GitHub.
-git clone https://github.com/Singh-Jas-meet/TalkJunction.git
+gh repo clone Singh-Jas-meet/TalkJunction
 
 2. Open the project in Android Studio.
 
